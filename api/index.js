@@ -73,3 +73,11 @@ app.use(errorHandler);
 
 // تصدير التطبيق لفيرسل
 export default app;
+
+// إذا تم تشغيل الملف مباشرةً، استمع على المنفذ المحدد
+if (process.env.NODE_ENV !== 'test') {
+  const PORT = process.env.BACKEND_PORT || 5000;
+  app.listen(PORT, () => {
+    console.log(`🚀 API server listening on port ${PORT}`);
+  });
+}
