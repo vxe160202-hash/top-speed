@@ -5,20 +5,20 @@
   "private": true,
   "workspaces": [
     "frontend",
-    "backend"
+    "api"
   ],
   "scripts": {
-    "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w backend\"",
-    "build": "npm run build -w frontend && npm run build -w backend",
-    "start": "npm start -w backend",
+    "dev": "concurrently \"npm run dev -w frontend\" \"npm run dev -w api\"",
+    "build": "npm run build -w frontend",
+    "start": "npm start -w api",
     "frontend": "npm run dev -w frontend",
-    "backend": "npm run dev -w backend"
+    "backend": "npm run dev -w api"
   },
   "devDependencies": {
     "concurrently": "^8.2.1"
-  }
-  ,
+  },
   "dependencies": {
+    "axios": "^1.13.6",
     "cloudinary": "^2.1.0"
   }
 }

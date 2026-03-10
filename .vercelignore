@@ -1,8 +1,9 @@
-# Ignore the legacy top-level api folder to avoid creating multiple serverless functions
-api/
-
-# Ignore node modules and environment files
+# Ignore environments and builds
 node_modules/
 .env
 .env.local
 .env.*.local
+.git/
+.gitignore
+*.md
+dist/

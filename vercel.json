@@ -16,8 +16,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/((?!assets|favicon\\.ico|robots\\.txt|api|sw\\.js).*)", "dest": "/index.html" }
+    { "src": "/((?!api|assets|favicon\\.ico|robots\\.txt|sw\\.js).*)", "dest": "/index.html" },
+    { "src": "/index.html", "status": 404 }
   ],
   "env": {}
 }
