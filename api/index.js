@@ -11,6 +11,7 @@ import modificationRoutes from './routes/modificationRoutes.js';
 import recommendationRoutes from './routes/recommendationRoutes.js';
 import configuratorRoutes from './routes/configuratorRoutes.js';
 import serviceRoutes from './routes/serviceRoutes.js';
+import visitorRoutes from './routes/visitorRoutes.js';
 
 dotenv.config();
 
@@ -22,9 +23,25 @@ let dbConnected = false;
 // إعدادات الـ Middleware الأساسية
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+
+const allowedOrigins = [
+  'https://top-speed-frontend-vxe160202-hashes-projects.vercel.app',
+  'https://tops-peed-frontend.vercel.app',
+  'http://localhost:5173',
+  'http://localhost:3000',
+];
+
 app.use(cors({
-  origin: true, 
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id'],
 }));
 
 // 1. مسارات الفحص السريع (Health Checks) 
@@ -67,6 +84,7 @@ app.use('/api/modifications', modificationRoutes);
 app.use('/api/recommendations', recommendationRoutes);
 app.use('/api/configurator', configuratorRoutes);
 app.use('/api/service', serviceRoutes);
+app.use('/api/visitors', visitorRoutes);
 
 // معالج الأخطاء
 app.use(errorHandler);

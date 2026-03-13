@@ -16,7 +16,8 @@
   ],
   "routes": [
     { "src": "/api/(.*)", "dest": "/api/index.js" },
-    { "src": "/((?!api|assets|favicon\\.ico|robots\\.txt|sw\\.js).*)", "dest": "/index.html" },
+    { "src": "/((?!api|assets|favicon\\.ico|robots\\.txt|sw\\.js|manifest\\.json).*)", "dest": "/index.html" },
+    { "src": "/manifest.json", "headers": { "Cache-Control": "public, max-age=3600" } },
     { "src": "/index.html", "status": 404 }
   ],
   "env": {}
