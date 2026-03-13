@@ -26,16 +26,19 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 
 const allowedOrigins = [
   'https://top-speed-frontend-vxe160202-hashes-projects.vercel.app',
-  'https://tops-peed-frontend.vercel.app',
+  'https://top-speed-frontend.vercel.app',
+  'https://top-speed-vxe160202-hash.vercel.app', // Add your actual frontend Vercel URL here
   'http://localhost:5173',
   'http://localhost:3000',
 ];
 
 app.use(cors({
   origin: (origin, callback) => {
+    console.log('Request origin:', origin); // Log the incoming origin for debugging
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
+      console.log('CORS blocked origin:', origin); // Log blocked origins
       callback(new Error('Not allowed by CORS'));
     }
   },
@@ -96,6 +99,6 @@ export default app;
 if (process.env.NODE_ENV !== 'test') {
   const PORT = process.env.BACKEND_PORT || 5000;
   app.listen(PORT, () => {
-    console.log(`🚀 API server listening on port ${PORT}`);
+    console.log(` API server listening on port ${PORT}`);
   });
 }
