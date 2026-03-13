@@ -7,6 +7,10 @@ const API_URL = import.meta.env.PROD
   ? import.meta.env.VITE_API_URL || 'https://top-speed-backend.vercel.app/api'
   : 'http://localhost:5000/api';
 
+if (import.meta.env.DEV) {
+  console.debug('Using API baseURL:', API_URL);
+}
+
 export const apiClient = axios.create({
   baseURL: API_URL,
   timeout: 30000,
