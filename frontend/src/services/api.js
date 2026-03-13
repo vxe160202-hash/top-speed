@@ -1,7 +1,10 @@
 import axios from 'axios';
 
+// In development we point at the local backend.
+// In production, we rely on VITE_API_URL set in Vercel.
+// As a fallback, use the known backend domain (prevents broken builds when env vars are missing).
 const API_URL = import.meta.env.PROD
-  ? import.meta.env.VITE_API_URL
+  ? import.meta.env.VITE_API_URL || 'https://top-speed-backend.vercel.app/api'
   : 'http://localhost:5000/api';
 
 export const apiClient = axios.create({
