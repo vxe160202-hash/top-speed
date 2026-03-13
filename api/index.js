@@ -32,14 +32,25 @@ const allowedOrigins = [
   'http://localhost:3000',
 ];
 
-app.use(
-  cors({
-    origin: allowedOrigins,
-    credentials: true,
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
-    allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id'],
-  })
-);
+// Use a permissive origin handler to avoid CORS failures while still allowing
+// control over which origins are permitted.
+const corsOptions = {
+  origin: (origin, callback) => {
+    // `origin` will be undefined for same-origin (server-to-server) requests.
+    if (!origin || allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    }
+
+    // If the request origin is not in the allowlist, deny it.
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'x-session-id'],
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions));
 
 // 1. مسارات الفحص السريع (Health Checks) 
 // وضعناها هنا لضمان الرد الفوري وتجنب خطأ 504
