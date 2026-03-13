@@ -27,22 +27,20 @@ app.use(express.urlencoded({ limit: '50mb', extended: true }));
 const allowedOrigins = [
   'https://top-speed-frontend-vxe160202-hashes-projects.vercel.app',
   'https://top-speed-frontend.vercel.app',
-  'https://top-speed-vxe160202-hash.vercel.app', // Add your actual frontend Vercel URL here
+  'https://top-speed-vxe160202-hash.vercel.app', // Replace with the exact deployed frontend URL if different
   'http://localhost:5173',
   'http://localhost:3000',
 ];
 
-// Use a permissive origin handler to avoid CORS failures while still allowing
-// control over which origins are permitted.
 const corsOptions = {
   origin: (origin, callback) => {
-    // `origin` will be undefined for same-origin (server-to-server) requests.
+    // If no origin is present, allow (server-to-server / same-origin requests).
     if (!origin || allowedOrigins.includes(origin)) {
       return callback(null, true);
     }
 
-    // If the request origin is not in the allowlist, deny it.
-    return callback(new Error('Not allowed by CORS'));
+    console.warn('CORS blocked origin:', origin);
+    callback(new Error('Not allowed by CORS'));
   },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS', 'PATCH'],
